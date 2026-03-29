@@ -1,166 +1,172 @@
-# ResuMatch — AI Resume Matcher
-### OpenCV + NLP Powered Resume Screening System
+# 🤖 AI Resume Matcher
+
+An intelligent web application that analyzes resumes against job descriptions using Natural Language Processing (NLP) and machine learning techniques.
+
+---
+
+## 🚀 Live Demo
+
+🌐 [https://ai-resume-matcher-da52.onrender.com]
 
 ---
 
 ## 📌 Overview
 
-ResuMatch is a full-stack resume screening tool that uses:
-- **OpenCV** — Document image preprocessing (deskew, denoise, binarize, layout analysis)
-- **TF-IDF NLP** — Semantic similarity scoring between resume & job description
-- **Skill Extraction** — 60+ tech keywords matched with JD requirements
-- **Section Parsing** — Regex-based section detection (Skills, Experience, Education, etc.)
-- **Batch Ranking** — Rank multiple resumes against one job description
+The AI Resume Matcher helps job seekers evaluate how well their resume matches a given job description. It provides:
+
+* 📊 Match score
+* ✅ Skill alignment
+* ❌ Missing skills
+* 📈 Resume ranking (bulk mode)
 
 ---
 
-## 🗂️ Project Structure
+## ✨ Features
 
-```
-resume_matcher/
-├── resume_processor.py   # Core engine: OpenCV + NLP + Matcher
-├── app.py                # Flask web server + REST API
-├── cli.py                # Command-line interface
-├── test_matcher.py       # End-to-end test suite
-├── templates/
-│   └── index.html        # Web UI (dark theme)
-├── uploads/              # Temp file storage
-└── requirements.txt
+* 🔍 **Resume Parsing**
+
+  * Supports PDF, DOCX, TXT, and image formats
+* 🧠 **NLP-Based Skill Extraction**
+* 📊 **Semantic Matching Engine**
+* 📂 **Bulk Resume Ranking**
+* 📄 **Text-based Resume Analysis**
+* 🌐 **Web Interface with Flask**
+
+---
+
+## 🛠️ Tech Stack
+
+| Category      | Tools Used         |
+| ------------- | ------------------ |
+| Backend       | Flask (Python)     |
+| NLP           | spaCy / Custom NLP |
+| ML            | Scikit-learn       |
+| File Handling | PyPDF2, pdfplumber |
+| Frontend      | HTML, CSS          |
+| Deployment    | Render             |
+
+---
+
+## 🧠 How It Works
+
+1. Upload a resume or paste resume text
+2. Provide a job description
+3. System extracts:
+
+   * Skills
+   * Education
+   * Experience
+4. Computes similarity score using NLP techniques
+5. Outputs:
+
+   * Match percentage
+   * Missing skills
+   * Recommendations
+
+---
+
+## 📂 Project Structure
+
+```bash
+AI-Resume-Matcher/
+│── app.py
+│── resume_processor.py
+│── requirements.txt
+│── templates/
+│── uploads/
 ```
 
 ---
 
-## ⚡ Quick Start
+## ⚙️ Installation & Setup
 
-### 1. Install dependencies
+### 1️⃣ Clone the repository
+
+```bash
+git clone https://github.com/ANJANA-K-HUB/AI-Resume-Matcher.git
+cd AI-Resume-Matcher
+```
+
+---
+
+### 2️⃣ Install dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Run Tests
-```bash
-python test_matcher.py
-```
+---
 
-### 3. Web Interface
+### 3️⃣ Run the application
+
 ```bash
 python app.py
-# Open: http://localhost:5000
-```
-
-### 4. CLI Usage
-```bash
-# Single resume
-python cli.py --resume john_doe.pdf --jd "Python ML engineer 3+ years"
-
-# Match from JD file
-python cli.py --resume resume.docx --jd-file job.txt
-
-# Bulk rank a directory
-python cli.py --resume-dir ./candidates/ --jd-file jd.txt --top 5
-
-# Save JSON output
-python cli.py --resume resume.pdf --jd-file jd.txt --output result.json
 ```
 
 ---
 
-## 🔌 REST API Endpoints
+### 4️⃣ Open in browser
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/match-single` | Match one resume file |
-| POST | `/api/match-bulk` | Rank multiple resumes |
-| POST | `/api/analyze-text` | Match pasted text (no file upload) |
-| POST | `/api/extract-skills` | Extract skills from text |
-| GET  | `/api/health` | Health check |
-
-### Example: Match Single Resume
-```bash
-curl -X POST http://localhost:5000/api/match-single \
-  -F "resume=@resume.pdf" \
-  -F "job_description=Python developer 3+ years ML experience"
-```
-
-### Example: Analyze Text (JSON)
-```bash
-curl -X POST http://localhost:5000/api/analyze-text \
-  -H "Content-Type: application/json" \
-  -d '{"resume_text": "...your resume...", "job_description": "...JD..."}'
+```text
+http://localhost:5000
 ```
 
 ---
 
-## 🧠 Scoring Algorithm
+## 🌍 Deployment
 
-The match score is computed from **4 signals**:
+This project is deployed using **Render**.
 
-| Signal | Weight | Method |
-|--------|--------|--------|
-| TF-IDF Cosine Similarity | 35% | Bigram TF-IDF on full text |
-| Skill Overlap | 35% | Keyword matching from 60+ skills |
-| Section-Weighted Score | 20% | Skills(35%), Exp(30%), Edu(15%), etc. |
-| Experience Match | 10% | Year extraction + ratio scoring |
+To deploy:
 
-**Grade thresholds:**
-- ≥75% → Excellent Match 🟢
-- ≥55% → Good Match 🔵
-- ≥35% → Moderate Match 🟡
-- <35%  → Low Match 🔴
+1. Connect GitHub repo to Render
+2. Set build command:
 
----
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Set start command:
 
-## 🖼️ OpenCV Pipeline
-
-For image-based resumes (PNG, JPG) and PDF first pages:
-
-1. **Grayscale conversion** — `cv2.cvtColor`
-2. **Denoising** — `cv2.fastNlMeansDenoising`
-3. **Binarization** — Otsu's thresholding
-4. **Deskew** — Angle correction via `cv2.minAreaRect`
-5. **Layout Analysis** — Projection profiles + contour detection
-   - Estimates line count, text density, column detection
+   ```bash
+   python app.py
+   ```
 
 ---
 
-## 📦 Supported File Types
+## 📸 Screenshots
 
-| Format | Extraction Method |
-|--------|-------------------|
-| PDF    | pdfplumber |
-| DOCX   | python-docx |
-| TXT    | direct read |
-| PNG/JPG | OpenCV preprocess + pytesseract (optional) |
+*Add screenshots of your app here (very important for recruiters)*
 
 ---
 
-## 🔧 Optional: OCR for Scanned Resumes
+## 🎯 Use Cases
 
-To enable OCR on scanned image resumes:
-```bash
-sudo apt-get install tesseract-ocr
-pip install pytesseract
-```
+* Job seekers improving resumes
+* Recruiters screening candidates
+* Students preparing for placements
 
 ---
 
-## 🧩 Key Classes
+## 🔮 Future Improvements
 
-```python
-from resume_processor import (
-    OpenCVProcessor,   # Image preprocessing
-    TextExtractor,     # PDF/DOCX/Image → text
-    NLPProcessor,      # Tokenize, skills, contact, sections
-    ResumeParser,      # Full parse pipeline
-    MatcherEngine,     # Score a resume vs JD
-    BatchRanker,       # Rank N resumes vs JD
-)
+* 🔐 User authentication
+* 📊 Advanced analytics dashboard
+* 🤖 LLM-based feedback (GPT integration)
+* 📱 Mobile-friendly UI
 
-# Quick usage
-parser = ResumeParser()
-engine = MatcherEngine()
+---
 
-resume = parser.parse("resume.pdf")
-result = engine.match(resume, "job description text")
-print(result['overall_score'], result['grade'])
-```
+## 👤 Author
+
+**Anjana K**
+
+* GitHub: https://github.com/ANJANA-K-HUB
+* LinkedIn:https://www.linkedin.com/in/anjana28/
+
+---
+
+## ⭐ If you like this project
+
+Give it a ⭐ on GitHub and share your feedback!
+
+---
