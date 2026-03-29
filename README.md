@@ -135,8 +135,11 @@ To deploy:
 
 ## 📸 Screenshots
 
-*Add screenshots of your app here (very important for recruiters)*
+### 🏠 Home Page
+![Home](assets/home.png)
 
+### 📊 Result Page
+![Result](assets/result.png)
 ---
 
 ## 🎯 Use Cases
