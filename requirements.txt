@@ -1,0 +1,20 @@
+# Resume Matcher - Requirements
+# Core
+flask>=3.0.0
+opencv-python>=4.8.0
+numpy>=1.24.0
+pandas>=2.0.0
+scikit-learn>=1.3.0
+scipy>=1.11.0
+Pillow>=10.0.0
+
+# Document parsing
+pdfplumber>=0.9.0
+python-docx>=0.8.11
+
+# Optional OCR (for scanned image resumes)
+# pytesseract>=0.3.10
+# Install Tesseract separately: sudo apt-get install tesseract-ocr
+
+# Dev
+werkzeug>=3.0.0
